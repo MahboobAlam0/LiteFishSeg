@@ -98,25 +98,26 @@ Warmup: 5 epochs cosine warm-up then cosine-annealing decay.
 
 ---
 
-## Dataset Support
+## Dataset
 
-| Format | Dataset | Notes |
-|--------|---------|-------|
-| COCO JSON | [USIS10K](https://github.com/LiamLian0852/USIS10K) | Underwater instance segmentation, 10 k images |
-| YOLO TXT | [Brackish](https://public.roboflow.com/object-detection/brackish-underwater) | Multi-class fish + crab + shrimp |
-
-Both formats are auto-detected via `configure_dataset()`.
+[USIS16K](https://github.com/LiamLian0852/USIS10K) — underwater instance segmentation, COCO format.
 
 Expected directory layout:
 ```
-USISDataset/
+USIS16K/
 ├── train/
-│   ├── images/
-│   └── annotations/instances_train.json   # COCO format
-└── val/
-    ├── images/
-    └── annotations/instances_val.json
+│   └── <images>
+├── val/
+│   └── <images>
+├── test/
+│   └── <images>
+└── annotations/
+    ├── instances_train.json
+    ├── instances_val.json
+    └── instances_test.json
 ```
+
+Class names are loaded automatically from the annotation file on startup — no manual config needed.
 
 ---
 

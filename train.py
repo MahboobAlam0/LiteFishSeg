@@ -27,9 +27,9 @@ from litefishseg import (
     get_train_transforms,
     get_val_transforms,
     get_heavy_transforms,
-    generate_masks_from_bboxes,
     LiteFishSegInference,
     BRACKISH_CLASSES,
+    USISDataset,
 )
 
 try:
@@ -403,7 +403,7 @@ class Trainer:
 def main():
     pa = argparse.ArgumentParser("LiteFishSeg")
     pa.add_argument("--data",           default="./USISDataset")
-    pa.add_argument("--generate-masks", action="store_true")
+
     pa.add_argument("--batch-size",     type=int, default=32)
     pa.add_argument("--img-size",       type=int, default=512,
                     help="512 trains ~25%% faster than 640")
@@ -439,17 +439,13 @@ def main():
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.allow_tf32       = True
 
-    if a.generate_masks:
-        for s in ["train", "val", "test"]:
-            generate_masks_from_bboxes(a.data, s)
-        return
 
     if a.eval:
         if not a.weights:
             print("--weights required for --eval"); return
-        DatasetClass, _ = configure_dataset(a.data)
+        configure_dataset(a.data)
         inf = LiteFishSegInference(a.weights, device=a.device)
-        ds  = DatasetClass(a.data, "test", 640, get_val_transforms(640))
+        ds  = USISDataset(a.data, "test", 640, get_val_transforms(640))
         print(f"Evaluating {len(ds)} images...")
         return
 
