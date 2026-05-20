@@ -57,7 +57,7 @@ matplotlib.rcParams.update({
 })
 
 # ── project imports ───────────────────────────────────────────────────────────
-from main import (
+from litefishseg import (
     CFG,
     LiteFishSegInference,
     BRACKISH_CLASSES,

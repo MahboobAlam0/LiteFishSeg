@@ -202,9 +202,27 @@ Outputs colorblind-safe overlays (Paul Tol palette) with feathered mask edges on
 
 ```
 LiteFishSeg/
-├── main.py               # Model, datasets, losses, inference engine
-├── train.py              # Training loop, AMP, EMA, optimizer, scheduler
-├── visualization_pub.py  # Publication-quality figure generation
+├── litefishseg/              # Core package
+│   ├── config.py             # Config dataclass, global CFG, class maps, colours
+│   ├── models/
+│   │   ├── blocks.py         # ConvBN, DWConv (shared building blocks)
+│   │   ├── backbone.py       # MobileNetV3LargeBackbone
+│   │   ├── neck.py           # BiFPN — bidirectional multi-scale feature pyramid
+│   │   ├── heads.py          # FCOSHead (cls + centerness + box), FPNSegHead
+│   │   └── detector.py       # LiteFishSeg end-to-end model, build_model()
+│   ├── data/
+│   │   ├── preprocessing.py  # UnderwaterPreprocessor (WB → CLAHE → gamma)
+│   │   ├── augmentations.py  # get_train / get_val / get_heavy transforms
+│   │   ├── datasets.py       # BrackishDataset (YOLO), USISDataset (COCO)
+│   │   └── loaders.py        # configure_dataset(), create_dataloaders()
+│   ├── losses/
+│   │   └── detection.py      # LiteFishSegLoss (FCOS + Focal + GIoU + centerness + Dice)
+│   ├── engine/
+│   │   └── inference.py      # LiteFishSegInference — preprocess, decode, NMS, visualize
+│   └── utils/
+│       └── masks.py          # generate_masks_from_bboxes()
+├── train.py                  # Training entry point (phases, AMP, EMA, CSV logging)
+├── visualization_pub.py      # Publication-quality result figures (IEEE / Springer)
 ├── requirements.txt
 └── README.md
 ```
