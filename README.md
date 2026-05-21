@@ -55,7 +55,7 @@ When accuracy is the priority, use FishSegDet. When you need inference on a cons
   <tr>
     <td align="center">
       <b>Backbone — MobileNetV3-Large (Stage-by-stage breakdown)</b><br><br>
-      <img src="assets/architecture_backbone.jpg" alt="MobileNetV3-Large Backbone">
+      <img src="assets/architecture_backbone.png" alt="MobileNetV3-Large Backbone">
     </td>
   </tr>
 </table>
