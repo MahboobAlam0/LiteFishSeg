@@ -32,10 +32,10 @@ The architecture trades FishSegDet's ConvNeXtV2-Large backbone and Distribution 
 | **Neck channels** | 256 | 128 |
 | **Mask prototype dim** | 128 | 64 |
 | **Total params** | **204.75 M** | **9.08 M** |
-| **mAP** | **70.0 %** | 45.1 % |
-| **mAP₅₀** | **95.1 %** | 73.72 % |
-| **mIoU** | **93.4 %** | 80.3 % |
-| **Dice** | **94.39 %** | 81.51 % |
+| **mAP** | **74.34 %** | 45.10 % |
+| **mAP₅₀** | **97.73 %** | 73.72 % |
+| **mIoU** | **94.41 %** | 80.30 % |
+| **Dice** | **95.84 %** | 81.51 % |
 | **Default image size** | 640 px | 512 px |
 | **Use case** | High-accuracy analysis | Real-time / edge deployment |
 
@@ -114,9 +114,9 @@ LiteFishSeg is evaluated against YOLOv10l-seg and YOLOv11l-seg — both signific
 
 | Model | Params | mAP | mAP₅₀ | mIoU | Dice | Precision | Recall | Pixel Acc |
 |---|---|---|---|---|---|---|---|---|
-| YOLOv10l-seg | 24.4 M | 64.1 % | 85.5 % | 84.32 % | 83.92 % | 82.40 % | 85.50 % | 91.00 % |
-| YOLOv11l-seg | 27.7 M | 67.3 % | 88.0 % | 86.45 % | 86.12 % | 85.27 % | 87.00 % | 93.25 % |
-| **LiteFishSeg (Ours)** | **9.08 M** | 45.1 % | 73.72 % | 80.3 % | 81.51 % | 80.45 % | 82.61 % | 88.70 % |
+| YOLOv10l-seg \[64\] | ~24.4 M | 64.10 % | 85.50 % | 84.32 % | 83.92 % | 82.40 % | 85.50 % | 91.00 % |
+| YOLOv11l-seg \[65\] | ~27.71 M | 67.30 % | 88.00 % | 86.45 % | 86.12 % | 85.27 % | 87.00 % | 93.25 % |
+| **LiteFishSeg (Ours)** | **~9.08 M** | 45.10 % | 73.72 % | 80.30 % | 81.51 % | 80.45 % | 82.61 % | 88.70 % |
 
 LiteFishSeg achieves **mIoU 80.3 %** and **Dice 81.51 %** using only **9.08 M parameters** — **2.7× fewer than YOLOv10l-seg** and **3× fewer than YOLOv11l-seg**. The detection gap (mAP 45.1 % vs 67.3 %) reflects the architectural trade-off: FCOS with direct regression and a 128-channel neck is substantially lighter than DFL with TAL assignment and a 256-channel neck. For applications where segmentation quality and deployment footprint matter more than detection mAP, LiteFishSeg is the right choice.
 
