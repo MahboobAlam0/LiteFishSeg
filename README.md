@@ -18,7 +18,7 @@
 
 LiteFishSeg is the **speed-first counterpart to [FishSegDet](../FishSegDet)**. Both models solve the same task — joint bounding-box detection and instance segmentation of underwater marine life on USIS16K — but LiteFishSeg is designed for deployment scenarios where latency matters: on-vessel edge hardware, real-time video monitoring systems, or rapid iteration during data collection.
 
-The architecture trades FishSegDet's ConvNeXtV2-Large backbone and Distribution Focal Loss for a MobileNetV3-Large backbone and an FCOS head, cutting parameter count by roughly **10–15×** while keeping the same dual-output (detection + segmentation) contract.
+The architecture trades FishSegDet's ConvNeXtV2-Large backbone and Distribution Focal Loss for a MobileNetV3-Large backbone and an FCOS head, cutting parameter count by roughly **22×** (204.75M → 9.08M) while keeping the same dual-output (detection + segmentation) contract.
 
 ---
 
@@ -26,16 +26,20 @@ The architecture trades FishSegDet's ConvNeXtV2-Large backbone and Distribution 
 
 | | FishSegDet | LiteFishSeg |
 |---|---|---|
-| **Backbone** | ConvNeXtV2-Large (198M params) | MobileNetV3-Large (5.4M params) |
+| **Backbone** | ConvNeXtV2-Large | MobileNetV3-Large |
 | **Detection head** | DFL + TAL assignment | FCOS + Focal Loss + centerness |
 | **FPN levels** | 4 (P3–P6, strides 8–64) | 3 (P3–P5, strides 8–32) |
 | **Neck channels** | 256 | 128 |
 | **Mask prototype dim** | 128 | 64 |
-| **Total approx. params** | ~250–500M | ~30–40M |
+| **Total params** | **204.75 M** | **9.08 M** |
+| **mAP** | **70.0 %** | 45.1 % |
+| **mAP₅₀** | **95.1 %** | 73.72 % |
+| **mIoU** | **93.4 %** | 80.3 % |
+| **Dice** | **94.39 %** | 81.51 % |
 | **Default image size** | 640 px | 512 px |
-| **Use case** | High-accuracy offline analysis | Real-time / edge deployment |
+| **Use case** | High-accuracy analysis | Real-time / edge deployment |
 
-When accuracy is the priority, use FishSegDet. When you need inference on a constrained device or within a latency budget, use LiteFishSeg.
+When accuracy is the priority, use FishSegDet. When you need inference on a constrained device or within a latency budget, LiteFishSeg delivers competitive segmentation quality (mIoU 80.3 %) at **22× fewer parameters**.
 
 ---
 
@@ -125,16 +129,15 @@ All optimisations are applied by default; none require code changes.
 
 ## Evaluation Metrics
 
-| Metric | What it measures |
-|---|---|
-| mAP@0.5:0.95 | Detection accuracy across IoU thresholds (COCO standard) |
-| mAP@0.5 | Detection recall at 50% IoU |
-| per-class AP50 | Per-species detection quality |
-| mIoU | Mean segmentation overlap across all classes |
-| Dice | Harmonic mean of precision/recall at pixel level |
-| Pixel accuracy | Fraction of correctly classified pixels |
+LiteFishSeg is evaluated against YOLOv10l-seg and YOLOv11l-seg — both significantly heavier models — on the USIS16K test split.
 
-Weights and full benchmark results will be published following paper submission.
+| Model | Params | mAP | mAP₅₀ | mIoU | Dice | Precision | Recall | Pixel Acc |
+|---|---|---|---|---|---|---|---|---|
+| YOLOv10l-seg | 24.4 M | 64.1 % | 85.5 % | 84.32 % | 83.92 % | 82.40 % | 85.50 % | 91.00 % |
+| YOLOv11l-seg | 27.7 M | 67.3 % | 88.0 % | 86.45 % | 86.12 % | 85.27 % | 87.00 % | 93.25 % |
+| **LiteFishSeg (Ours)** | **9.08 M** | 45.1 % | 73.72 % | 80.3 % | 81.51 % | 80.45 % | 82.61 % | 88.70 % |
+
+LiteFishSeg achieves **mIoU 80.3 %** and **Dice 81.51 %** using only **9.08 M parameters** — **2.7× fewer than YOLOv10l-seg** and **3× fewer than YOLOv11l-seg**. The detection gap (mAP 45.1 % vs 67.3 %) reflects the architectural trade-off: FCOS with direct regression and a 128-channel neck is substantially lighter than DFL with TAL assignment and a 256-channel neck. For applications where segmentation quality and deployment footprint matter more than detection mAP, LiteFishSeg is the right choice.
 
 ---
 
