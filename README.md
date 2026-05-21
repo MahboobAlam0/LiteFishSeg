@@ -16,7 +16,7 @@
 
 ## Overview
 
-LiteFishSeg is the **speed-first counterpart to [FishSegDet](../FishSegDet)**. Both models solve the same task — joint bounding-box detection and instance segmentation of underwater marine life on USIS16K — but LiteFishSeg is designed for deployment scenarios where latency matters: on-vessel edge hardware, real-time video monitoring systems, or rapid iteration during data collection.
+LiteFishSeg is the **speed-first counterpart to [FishSegDet](https://github.com/MahboobAlam0/FishSegDet)**. Both models solve the same task — joint bounding-box detection and instance segmentation of underwater marine life on USIS16K — but LiteFishSeg is designed for deployment scenarios where latency matters: on-vessel edge hardware, real-time video monitoring systems, or rapid iteration during data collection.
 
 The architecture trades FishSegDet's ConvNeXtV2-Large backbone and Distribution Focal Loss for a MobileNetV3-Large backbone and an FCOS head, cutting parameter count by roughly **22×** (204.75M → 9.08M) while keeping the same dual-output (detection + segmentation) contract.
 
