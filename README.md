@@ -45,41 +45,22 @@ When accuracy is the priority, use FishSegDet. When you need inference on a cons
 
 ## Architecture
 
-```
-Input (512 × 512, BGR)
-        │
-        ▼
-┌──────────────────────┐
-│  UnderwaterPreproc.  │  Gray-world white balance → CLAHE → gamma LUT
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│  MobileNetV3-Large   │  ImageNet-1K V2 pretrained (torchvision)
-│  Inverted residuals  │  Outputs: C3 (40ch), C4 (112ch), C5 (960ch)
-│  + Hard-Swish acts   │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│   BiFPN  (2 × 128ch) │  3 levels P3–P5. Bidirectional weighted fusion.
-└──────────┬───────────┘
-           │
-    ┌──────┴──────┐
-    ▼             ▼
-┌─────────┐  ┌────────────────┐
-│  FCOS   │  │   Segment      │
-│  Head   │  │    Head        │
-│  4-conv │  │                │
-│  tower  │  │  Fuse P3–P5   │
-│  ──     │  │  → ASPP(6/12/ │
-│  cls    │  │    18/global) │
-│  ctr    │  │  → ProtoNet   │
-│  box    │  │  → SemNet     │
-│  (LTRB) │  │  (64-d mask   │
-│         │  │   prototypes) │
-└─────────┘  └────────────────┘
-```
+### Overview
+
+![LiteFishSeg Architecture](assets/architecture_overview.png)
+
+### Component Diagrams
+
+<table>
+  <tr>
+    <td align="center">
+      <b>Backbone — MobileNetV3-Large (Stage-by-stage breakdown)</b><br><br>
+      <img src="assets/architecture_backbone.jpg" alt="MobileNetV3-Large Backbone">
+    </td>
+  </tr>
+</table>
+
+### Design Decisions
 
 | Component | Choice | Why |
 |---|---|---|
