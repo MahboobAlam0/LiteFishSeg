@@ -141,6 +141,51 @@ LiteFishSeg achieves **mIoU 80.3 %** and **Dice 81.51 %** using only **9.08 M pa
 
 ---
 
+## Visual Results
+
+Each panel shows **Input image · Ground truth mask · Model prediction** (segmentation overlay + bounding box).
+
+<table>
+  <tr>
+    <td align="center">
+      <b>Abalone</b><br>
+      <img src="assets/Abalone0830067_collage.png" alt="Abalone">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Anyperodon Leucogrammicus</b><br>
+      <img src="assets/AnyperodonLeucogrammicus0620038_collage.png" alt="Anyperodon Leucogrammicus">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Bicolor Angelfish</b><br>
+      <img src="assets/BicolorAngelfish0260149_collage.png" alt="Bicolor Angelfish">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Bluecheek Butterflyfish</b><br>
+      <img src="assets/BluecheekButterflyfish0740026_collage.png" alt="Bluecheek Butterflyfish">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Blue Parrotfish (i)</b><br>
+      <img src="assets/BlueParrotfish0400003_collage.png" alt="Blue Parrotfish">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Blue Parrotfish (ii)</b><br>
+      <img src="assets/BlueParrotfish0400042_collage.png" alt="Blue Parrotfish">
+    </td>
+  </tr>
+</table>
+
+---
+
 ## Quick Start
 
 ### Installation
